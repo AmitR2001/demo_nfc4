@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Writer/Reader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        p {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NFC Writer/Reader</h1>
+        <h2>Basic Patient Information</h2>
+        <input type="text" id="fullName" placeholder="Full Name">
+        <input type="number" id="age" placeholder="Age">
+        <input type="text" id="gender" placeholder="Gender">
+        <input type="text" id="bloodType" placeholder="Blood Type">
+        
+        <h2>Allergies</h2>
+        <textarea id="drugAllergies" placeholder="Drug Allergies"></textarea>
+        <textarea id="foodAllergies" placeholder="Food Allergies"></textarea>
+        <textarea id="environmentalAllergies" placeholder="Environmental Allergies"></textarea>
+        
+        <h2>Chronic Conditions</h2>
+        <label for="diabetes">Diabetes:</label>
+        <select id="diabetes">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <label for="hypertension">Hypertension:</label>
+        <select id="hypertension">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <label for="asthma">Asthma:</label>
+        <select id="asthma">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <label for="heartDisease">Heart Disease:</label>
+        <select id="heartDisease">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <label for="kidneyDisease">Kidney Disease:</label>
+        <select id="kidneyDisease">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        
+        <h2>Medications</h2>
+        <textarea id="currentMedications" placeholder="Current Medications"></textarea>
+        <textarea id="medicationChanges" placeholder="Medication Changes"></textarea>
+        
+        <h2>Past Medical History</h2>
+        <textarea id="surgeries" placeholder="Surgeries"></textarea>
+        <textarea id="illnesses" placeholder="Illnesses"></textarea>
+        
+        <h2>Emergency Contact</h2>
+        <input type="text" id="emergencyContactName" placeholder="Name">
+        <input type="text" id="emergencyContactRelationship" placeholder="Relationship">
+        <input type="text" id="emergencyContactPhone" placeholder="Phone">
+        
+        <h2>Immunization Records</h2>
+        <input type="text" id="tetanus" placeholder="Tetanus">
+        <input type="text" id="covid19" placeholder="COVID-19">
+        <textarea id="otherImmunizations" placeholder="Other Immunizations"></textarea>
+        
+        <h2>Lifestyle Factors (Optional)</h2>
+        <label for="smoker">Smoker:</label>
+        <select id="smoker">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <label for="alcohol">Alcohol:</label>
+        <select id="alcohol">
+            <option value="No">No</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Daily">Daily</option>
+        </select>
+        <textarea id="dietaryRestrictions" placeholder="Dietary Restrictions"></textarea>
+        
+        <h2>Physician Details</h2>
+        <input type="text" id="physicianName" placeholder="Name">
+        <input type="text" id="physicianContact" placeholder="Contact">
+        
+        <h2>Insurance Information</h2>
+        <input type="text" id="insuranceProvider" placeholder="Provider">
+        <input type="text" id="insurancePolicy" placeholder="Policy">
+        
+        <button id="writeButton">Write to NFC Tag</button>
+        <button id="readButton">Read from NFC Tag</button>
+        <p id="message"></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
