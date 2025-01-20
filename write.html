@@ -7,26 +7,15 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            box-sizing: border-box;
         }
         .container {
-            background-color: #fff;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            overflow-y: auto;
-            max-height: 90vh;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #333;
         }
         input, select, textarea {
             width: 100%;
@@ -51,20 +40,23 @@
             text-align: center;
             color: #333;
         }
-       
         .form-control {
             margin-bottom: 15px;
         }
         .btn {
             margin-bottom: 10px;
         }
-        @media (max-width: 768px) {
-            .form-control, .btn {
-                width: 100%;
-                margin-bottom: 15px;
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            input, select, textarea {
+                padding: 8px;
+            }
+            button {
+                padding: 8px;
             }
         }
-    
     </style>
 </head>
 <body>
@@ -267,7 +259,7 @@
     <input type="text" id="insuranceProvider" placeholder="Provider (e.g., Blue Cross, Aetna)"
         class="form-control" required>
     <input type="text" id="insurancePolicy" placeholder="Policy Number" class="form-control" required>
-    
+
         <button id="writeButton">Write to NFC Tag</button>
         <button id="readButton">Read from NFC Tag</button>
         <p id="message"></p>
