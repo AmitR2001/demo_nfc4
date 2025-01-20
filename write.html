@@ -51,13 +51,27 @@
             text-align: center;
             color: #333;
         }
+       
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .btn {
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .form-control, .btn {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+    
     </style>
 </head>
 <body>
     <div class="container">
         <h1>NFC Writer/Reader</h1>
         <h2>Basic Patient Information</h2>
-        <input type="text" id="fullName" placeholder="Full Name">
+        <!-- <input type="text" id="fullName" placeholder="Full Name">
         <input type="number" id="age" placeholder="Age">
         <input type="text" id="gender" placeholder="Gender">
         <input type="text" id="bloodType" placeholder="Blood Type">
@@ -132,8 +146,128 @@
         
         <h2>Insurance Information</h2>
         <input type="text" id="insuranceProvider" placeholder="Provider">
-        <input type="text" id="insurancePolicy" placeholder="Policy">
+        <input type="text" id="insurancePolicy" placeholder="Policy"> -->
         
+        <input type="text" id="fullName" placeholder="Full Name" class="form-control" required maxlength="100"
+        pattern="[A-Za-z ]+">
+    <input type="number" id="age" placeholder="Age" class="form-control" required min="0" max="120">
+    <label for="gender">Gender:</label>
+    <select id="gender" class="form-control" required>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+        <option value="Prefer not to say">Prefer not to say</option>
+    </select>
+
+    <label for="bloodType">Blood Type:</label>
+    <select id="bloodType" class="form-control" required>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="Unknown">Unknown</option>
+    </select>
+
+    <h2>Allergies</h2>
+    <textarea id="drugAllergies" placeholder="Drug Allergies (e.g., Penicillin, Aspirin)"
+        class="form-control"></textarea>
+    <textarea id="foodAllergies" placeholder="Food Allergies (e.g., Peanuts, Shellfish)"
+        class="form-control"></textarea>
+    <textarea id="environmentalAllergies" placeholder="Environmental Allergies (e.g., Pollen, Dust)"
+        class="form-control"></textarea>
+
+    <h2>Chronic Conditions</h2>
+    <label for="diabetes">Diabetes:</label>
+    <select id="diabetes" class="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Pre-Diabetic">Pre-Diabetic</option>
+    </select>
+    <label for="hypertension">Hypertension:</label>
+    <select id="hypertension" class="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Borderline">Borderline</option>
+    </select>
+    <label for="asthma">Asthma:</label>
+    <select id="asthma" class="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Controlled">Controlled</option>
+    </select>
+    <label for="heartDisease">Heart Disease:</label>
+    <select id="heartDisease" class="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="History of Heart Issues">History of Heart Issues</option>
+    </select>
+    <label for="kidneyDisease">Kidney Disease:</label>
+    <select id="kidneyDisease" class="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Chronic">Chronic</option>
+    </select>
+
+    <h2>Medications</h2>
+    <textarea id="currentMedications" placeholder="Current Medications (e.g., Blood Pressure Medication)"
+        class="form-control"></textarea>
+    <textarea id="medicationChanges" placeholder="Medication Changes (e.g., Recently stopped or started)"
+        class="form-control"></textarea>
+
+    <h2>Past Medical History</h2>
+    <textarea id="surgeries" placeholder="Surgeries (e.g., Appendectomy, Knee Replacement)"
+        class="form-control"></textarea>
+    <textarea id="illnesses" placeholder="Illnesses (e.g., Pneumonia, Chickenpox)"
+        class="form-control"></textarea>
+
+    <h2>Emergency Contact</h2>
+    <input type="text" id="emergencyContactName" placeholder="Name" class="form-control" required
+        maxlength="100" pattern="[A-Za-z ]+">
+    <input type="text" id="emergencyContactRelationship" placeholder="Relationship (e.g., Spouse, Parent)"
+        class="form-control" required maxlength="50" pattern="[A-Za-z ]+">
+    <input type="text" id="emergencyContactPhone" placeholder="Phone (e.g., 1234567890)" class="form-control"
+        required maxlength="10" pattern="[6-9][0-9]{9}">
+
+    <h2>Immunization Records</h2>
+    <input type="text" id="tetanus" placeholder="Tetanus (e.g., Last received in 2020)" class="form-control">
+    <input type="text" id="covid19" placeholder="COVID-19 (e.g., 2 doses, booster in 2023)"
+        class="form-control">
+    <textarea id="otherImmunizations" placeholder="Other Immunizations (e.g., Flu, Hepatitis B)"
+        class="form-control"></textarea>
+
+    <h2>Lifestyle Factors (Optional)</h2>
+    <label for="smoker">Smoker:</label>
+    <select id="smoker" class="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Occasional">Occasional</option>
+        <option value="Former Smoker">Former Smoker</option>
+    </select>
+    <label for="alcohol">Alcohol:</label>
+    <select id="alcohol" class="form-control">
+        <option value="No">No</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Daily">Daily</option>
+        <option value="Occasional">Occasional</option>
+    </select>
+    <textarea id="dietaryRestrictions" placeholder="Dietary Restrictions (e.g., Vegan, Gluten-Free)"
+        class="form-control"></textarea>
+
+    <h2>Physician Details</h2>
+    <input type="text" id="physicianName" placeholder="Name" class="form-control" required maxlength="100"
+        pattern="[A-Za-z ]+">
+    <input type="text" id="physicianContact" placeholder="Contact (e.g., Clinic Phone Number)"
+        class="form-control" required maxlength="10" pattern="[6-9][0-9]{9}">
+
+    <h2>Insurance Information</h2>
+    <input type="text" id="insuranceProvider" placeholder="Provider (e.g., Blue Cross, Aetna)"
+        class="form-control" required>
+    <input type="text" id="insurancePolicy" placeholder="Policy Number" class="form-control" required>
+    
         <button id="writeButton">Write to NFC Tag</button>
         <button id="readButton">Read from NFC Tag</button>
         <p id="message"></p>
