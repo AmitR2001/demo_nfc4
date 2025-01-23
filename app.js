@@ -31,17 +31,17 @@ document.getElementById('writeButton').addEventListener('click', async () => {
     const insurancePolicy = document.getElementById('insurancePolicy').value;
 
     const message = `
-        1.PI|FN:${fullName}|A:${age}|G:${gender}|BT:${bloodType}
-        2.AL|D:${drugAllergies}|F:${foodAllergies}|E:${environmentalAllergies}
-        3.CC|D:${diabetes}|H:${hypertension}|A:${asthma}|HD:${heartDisease}|KD:${kidneyDisease}
-        4.MED|C:${currentMedications}|CH:${medicationChanges}
-        5.PMH|S:${surgeries}|I:${illnesses}
-        6.EC|N:${emergencyContactName}|R:${emergencyContactRelationship}|P:${emergencyContactPhone}
-        7.IMM|T:${tetanus}|C:${covid19}|O:${otherImmunizations}
-        8.LF|S:${smoker}|A:${alcohol}|DR:${dietaryRestrictions}
-        9.PHY|N:${physicianName}|C:${physicianContact}
-        10.INS|P:${insuranceProvider}|PN:${insurancePolicy}
-    `.trim();
+        ${fullName || 'N/A'},${age || 'N/A'},${gender || 'N/A'},${bloodType || 'N/A'},
+        ${drugAllergies || 'N/A'},${foodAllergies || 'N/A'},${environmentalAllergies || 'N/A'},
+        ${diabetes || 'N/A'},${hypertension || 'N/A'},${asthma || 'N/A'},${heartDisease || 'N/A'},${kidneyDisease || 'N/A'},
+        ${currentMedications || 'N/A'},${medicationChanges || 'N/A'},
+        ${surgeries || 'N/A'},${illnesses || 'N/A'},
+        ${emergencyContactName || 'N/A'},${emergencyContactRelationship || 'N/A'},${emergencyContactPhone || 'N/A'},
+        ${tetanus || 'N/A'},${covid19 || 'N/A'},${otherImmunizations || 'N/A'},
+        ${smoker || 'N/A'},${alcohol || 'N/A'},${dietaryRestrictions || 'N/A'},
+        ${physicianName || 'N/A'},${physicianContact || 'N/A'},
+        ${insuranceProvider || 'N/A'},${insurancePolicy || 'N/A'}
+    `;
 
     if ('NDEFReader' in window) {
         try {
@@ -66,62 +66,64 @@ document.getElementById('readButton').addEventListener('click', async () => {
             await ndef.scan();
             ndef.onreading = event => {
                 const decoder = new TextDecoder();
+                let nfcData = '';
                 for (const record of event.message.records) {
-                    const data = decoder.decode(record.data);
-                    const parsedData = parseNFCData(data);
-                    const newWindow = window.open();
-                    newWindow.document.write(`
-                        <html>
-                        <head>
-                            <title>Emergency Details</title>
-                            <style>
-                                body {
-                                    font-family: Arial, sans-serif;
-                                    background-color: #f4f4f4;
-                                    margin: 0;
-                                    padding: 20px;
-                                }
-                                .container {
-                                    background-color: #fff;
-                                    padding: 20px;
-                                    border-radius: 8px;
-                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                                }
-                                h1 {
-                                    text-align: center;
-                                    color: #333;
-                                }
-                                p {
-                                    color: #333;
-                                }
-                                a {
-                                    color: #007bff;
-                                    text-decoration: none;
-                                }
-                                a:hover {
-                                    text-decoration: underline;
-                                }
-                            </style>
-                        </head>
-                        <body>
-                            <div class="container">
-                                <h1>Emergency Details</h1>
-                                ${parsedData}
-                                <p><a href="tel:${document.getElementById('physicianContact').value}">Call Physician</a></p>
-                                <p><a href="tel:${document.getElementById('emergencyContactPhone').value}">Call Emergency Contact</a></p>
-                            </div>
-                        </body>
-                        </html>
-                    `);
+                    nfcData += decoder.decode(record.data);
                 }
+                displayNFCData(nfcData);
             };
         } catch (error) {
             document.getElementById('message').textContent = `Error: ${error}`;
+            document.getElementById('message').classList.add('alert', 'alert-danger');
         }
     } else {
         document.getElementById('message').textContent = 'Web NFC is not supported on this device.';
+        document.getElementById('message').classList.add('alert', 'alert-danger');
     }
 });
+
+// Function to display NFC data in a new window
+function displayNFCData(data) {
+    const fieldLabels = [
+        "Full Name", "Age", "Gender", "Blood Type",
+        "Drug Allergies", "Food Allergies", "Environmental Allergies",
+        "Diabetes", "Hypertension", "Asthma", "Heart Disease", "Kidney Disease",
+        "Current Medications", "Medication Changes",
+        "Surgeries", "Illnesses",
+        "Emergency Contact Name", "Emergency Contact Relationship", "Emergency Contact Phone",
+        "Tetanus", "COVID-19", "Other Immunizations",
+        "Smoker", "Alcohol", "Dietary Restrictions",
+        "Physician Name", "Physician Contact",
+        "Insurance Provider", "Insurance Policy"
+    ];
+
+    const values = data.split(',');
+    let content = '<html><head><title>NFC Data</title><style>';
+    content += 'body { font-family: Arial, sans-serif; margin: 20px; font-size: 20px; }';
+    content += 'h1 { text-align: center; font-size: 50px; }';
+    content += 'table { width: 100%; border-collapse: collapse; margin-top: 20px; }';
+    content += 'th, td { padding: 8px; border: 1px solid #ddd; text-align: left; font-size: 30px; }';
+    content += 'th { background-color: #f2f2f2; }';
+    content += '@media (max-width: 600px) {';
+    content += 'body { font-size: 18px; }';
+    content += 'h1 { font-size: 22px; }';
+    content += 'th, td { font-size: 16px; padding: 6px; }';
+    content += 'table { width: 100%; }';
+    content += '}';
+    content += '</style></head><body>';
+    content += '<h1>NFC Tag Data</h1>';
+    content += '<table>';
+    content += '<tr><th>Field</th><th>Value</th></tr>';
+    values.forEach((value, index) => {
+        content += `<tr><td>${fieldLabels[index]}</td><td>${value.trim() || 'N/A'}</td></tr>`;
+    });
+
+    content += '</table></body></html>';
+
+    const newWindow = window.open();
+    newWindow.document.write(content);
+    newWindow.document.close();
+}
 
 function parseNFCData(data) {
     const lines = data.split('\n');
