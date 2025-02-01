@@ -59,7 +59,7 @@ document.getElementById('writeButton').addEventListener('click', async () => {
     }
 });
 
-document.getElementById('readButton').addEventListener('click', async () => {
+document.getElementById('readNFCButton').addEventListener('click', async function handleClick() {
     if ('NDEFReader' in window) {
         try {
             const ndef = new NDEFReader();
@@ -71,6 +71,7 @@ document.getElementById('readButton').addEventListener('click', async () => {
                     nfcData += decoder.decode(record.data);
                 }
                 displayNFCData(nfcData);
+                // Remove the event listener after the first scan
                 document.getElementById('readNFCButton').removeEventListener('click', handleClick);
             };
         } catch (error) {
