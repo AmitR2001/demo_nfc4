@@ -71,6 +71,7 @@ document.getElementById('readButton').addEventListener('click', async () => {
                     nfcData += decoder.decode(record.data);
                 }
                 displayNFCData(nfcData);
+                document.getElementById('readNFCButton').removeEventListener('click', handleClick);
             };
         } catch (error) {
             document.getElementById('message').textContent = `Error: ${error}`;
