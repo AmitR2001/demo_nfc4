@@ -59,30 +59,85 @@ document.getElementById('writeButton').addEventListener('click', async () => {
     }
 });
 
-document.getElementById('readNFCButton').addEventListener('click', async function handleClick() {
+// document.getElementById('readNFCButton').addEventListener('click', async function handleClick() {
+//     if ('NDEFReader' in window) {
+//         try {
+//             const ndef = new NDEFReader();
+//             await ndef.scan();
+//             ndef.onreading = event => {
+//                 const decoder = new TextDecoder();
+//                 let nfcData = '';
+//                 for (const record of event.message.records) {
+//                     nfcData += decoder.decode(record.data);
+//                 }
+//                 displayNFCData(nfcData);
+//                 // Remove the event listener after the first scan
+//                 document.getElementById('readNFCButton').removeEventListener('click', handleClick);
+//             };
+//         } catch (error) {
+//             document.getElementById('message').textContent = `Error: ${error}`;
+//             document.getElementById('message').classList.add('alert', 'alert-danger');
+//         }
+//     } else {
+//         document.getElementById('message').textContent = 'Web NFC is not supported on this device.';
+//         document.getElementById('message').classList.add('alert', 'alert-danger');
+//     }
+// });
+
+document.getElementById('readNFCButton').addEventListener('click', async () => {
+    let isScanning = false; // Ensure this is declared appropriately in your scope
+
+    if (isScanning) return;
+    isScanning = true;
+
     if ('NDEFReader' in window) {
         try {
             const ndef = new NDEFReader();
-            await ndef.scan();
-            ndef.onreading = event => {
+            const abortController = new AbortController();
+
+            // Stop scanning when the page becomes hidden
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'hidden') {
+                    abortController.abort();
+                    isScanning = false;
+                }
+            });
+
+            await ndef.scan({ signal: abortController.signal });
+
+            ndef.onreading = (event) => {
                 const decoder = new TextDecoder();
                 let nfcData = '';
                 for (const record of event.message.records) {
                     nfcData += decoder.decode(record.data);
                 }
                 displayNFCData(nfcData);
-                // Remove the event listener after the first scan
-                document.getElementById('readNFCButton').removeEventListener('click', handleClick);
+
+                // Stop scanning after successful read
+                abortController.abort();
+                isScanning = false;
             };
+
         } catch (error) {
             document.getElementById('message').textContent = `Error: ${error}`;
             document.getElementById('message').classList.add('alert', 'alert-danger');
+            isScanning = false;
         }
     } else {
         document.getElementById('message').textContent = 'Web NFC is not supported on this device.';
         document.getElementById('message').classList.add('alert', 'alert-danger');
+        isScanning = false;
     }
 });
+
+function displayNFCData(data) {
+    // Open a new window once and pass the data
+    const newWindow = window.open('nfc-data.html', '_blank');
+    // Ensure data is passed after the window loads
+    newWindow.onload = () => {
+        newWindow.document.getElementById('nfcData').textContent = data;
+    };
+}
 
 // Function to display NFC data in a new window
 function displayNFCData(data) {
