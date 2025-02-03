@@ -59,7 +59,7 @@ document.getElementById('writeButton').addEventListener('click', async () => {
     }
 });
 
-// document.getElementById('readNFCButton').addEventListener('click', async function handleClick() {
+// document.getElementById('readButton').addEventListener('click', async function handleClick() {
 //     if ('NDEFReader' in window) {
 //         try {
 //             const ndef = new NDEFReader();
@@ -72,7 +72,7 @@ document.getElementById('writeButton').addEventListener('click', async () => {
 //                 }
 //                 displayNFCData(nfcData);
 //                 // Remove the event listener after the first scan
-//                 document.getElementById('readNFCButton').removeEventListener('click', handleClick);
+//                 document.getElementById('readButton').removeEventListener('click', handleClick);
 //             };
 //         } catch (error) {
 //             document.getElementById('message').textContent = `Error: ${error}`;
@@ -84,7 +84,7 @@ document.getElementById('writeButton').addEventListener('click', async () => {
 //     }
 // });
 
-document.getElementById('readNFCButton').addEventListener('click', async () => {
+document.getElementById('readButton').addEventListener('click', async () => {
     let isScanning = false; // Ensure this is declared appropriately in your scope
 
     if (isScanning) return;
